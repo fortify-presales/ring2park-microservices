@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.microfocus.microservices</groupId>
+    <artifactId>eureka-service</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <parent>
+		<groupId>com.microfocus.microservices</groupId>
+		<artifactId>ring2park-microservices</artifactId>
+		<version>1.0</version>
+    </parent>
+    
+    <properties>
+        <!-- The main class to start by executing java -jar -->
+        <start-class>com.microfocus.ring2parkms.registration.Main</start-class>
+        <!-- Default registration service and service ports -->
+        <eureka-server>localhost</eureka-server>
+        <eureka-port>1111</eureka-port>
+		<!-- Actuator configuration -->
+        <actuator-details>always</actuator-details>
+        <actuator-endpoints>"health,info,beans,metrics,env,logfile"</actuator-endpoints>
+        <!-- Logging configuration -->
+        <logging-file>eureka-service.log</logging-file>
+    </properties>
+
+   
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <arguments>--eurekaHostname=${eureka-server},--eurekaPort=${eureka-port}</arguments>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
